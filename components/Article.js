@@ -88,19 +88,68 @@ const data = [
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
+const articles = document.querySelector('.articles');
+
+function articleMaker({title, date, firstParagraph, secondParagraph, thirdParagraph}){
+  // Creating the elements to add to the page.
+  const divArticle = document.createElement('div');
+  const divTitle = document.createElement('h2');
+  const divDate = document.createElement('p');
+  const firstP = document.createElement('p');
+  const secondP = document.createElement('p');
+  const thirdP = document.createElement('p');
+  const span = document.createElement('span');
+
+  // build the structure of the site
+  divArticle.appendChild(divTitle);
+  divArticle.appendChild(divDate);
+  divArticle.appendChild(firstP);
+  divArticle.appendChild(secondP);
+  divArticle.appendChild(thirdP);
+  divArticle.appendChild(span);
+
+
+  // add classes to elements that require it
+  divArticle.classList.add('article');
+  divDate.classList.add('date');
+  span.classList.add('expandButton');
+
+
+  // assign info to each element
+  divTitle.textContent = title;
+  divDate.textContent = date;
+  firstP.textContent = firstParagraph;
+  secondP.textContent = secondParagraph;
+  thirdP.textContent = thirdParagraph;
+  span.textContent = '+';
+
+
+  // add event listener to span.expand
+  span.addEventListener('click', () => {
+    divArticle.classList.toggle('article-open');
+  });
+  return divArticle;
+}
+
+data.forEach(element => {
+  const getBack = articleMaker(element);
+  articles.appendChild(getBack);
+})
 
 /*
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+  <div class="article">                        // divArticle
+    <h2>{title of the article}</h2>            // title
+    <p class="date">{date of the article}</p>  // date
 
-    {three separate paragraph elements}
+    {three separate paragraph elements}        // firstP
+                                               // secondP
+                                               // thirdP
 
-    <span class="expandButton">+</span>
+    <span class="expandButton">+</span>        // span
   </div>
 
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
